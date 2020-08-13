@@ -1,9 +1,7 @@
 package main.java.com.yaroslavshchur.executor;
 
 import main.java.com.yaroslavshchur.user.User;
-import org.w3c.dom.ls.LSOutput;
 
-import java.net.UnknownServiceException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -29,63 +27,56 @@ public class Executor {
             list.add(new User("Marina", 32, "Kyiv"));
             list.add(new User("Ivan Ivanovich", 69, "Lviv"));
             System.out.println("This is a list of User older than " + midAge);
-            printUserOlderAge(list);
+            getUserOlderAge(list);
 
             System.out.println("This is a list of User from " + firstCity + " older than " + highAge);
-            printUserYoungerAgeFromCity(list, firstCity);
+            getUserYoungerAgeFromCity(list, firstCity);
 
             System.out.println("This is the average age of User from " + secondCity);
-            printUserAverageAgeFromCity(list, secondCity);
+            getUserAverageAgeFromCity(list, secondCity);
 
             System.out.println("This is a list of User not from Kyiv " + thirdCity);
-            printUserNotFromCity(list, thirdCity);
+            getUserNotFromCity(list, thirdCity);
         }
 
-        public static void printUserOlderAge(List<User> users) {
-            System.out.println("User older than " + midAge);
-            users.stream()
+        private  List<User> getUserOlderAge(List<User> users) {
+            return users.stream()
                     .filter(user -> user.getAge() > midAge)
-                    .forEach(System.out::println);
+                    .collect(Collectors.toList());
 
         }
 
-        public static void printUserYoungerAgeFromCity(List<User> users, String firstCity) {
-            System.out.println("Users younger tnan " + highAge + " from " + firstCity);
-            users.stream()
+        private  List<User> getUserYoungerAgeFromCity(List<User> users, String firstCity) {
+            return users.stream()
                     .filter(user -> user.getAge() < highAge)
                     .filter(user -> user.getCity().equals(firstCity))
-                    .forEach(System.out::println);
+                    .collect(Collectors.toList());
         }
 
-        public static void printUserAverageAgeFromCity(List<User> users, String secondCity) {
-            System.out.println("Average age of Users from " + secondCity + " :");
-            System.out.println(
-                    users.stream()
-                            .filter(user -> user.getCity().equals(secondCity))
-                            .mapToInt(User::getAge)
-                            .average()
-                            .getAsDouble());
+        private  List<User> getUserAverageAgeFromCity(List<User> users, String secondCity) {
+
+
+            return users.stream()
+                    .filter(user -> user.getCity().equals(secondCity))
+                    .collect(Collectors.toList());
         }
 
-        public static void printUserNotFromCity(List<User> users, String thirdCity) {
-            System.out.println("Number of users not from " + thirdCity);
-            System.out.println(
-                    users.stream()
+
+        private List<User>getUserNotFromCity(List<User> users, String thirdCity) {
+                    return users.stream()
                             .filter(user -> !user.getCity().equals(thirdCity))
-                            .count());
+                            .collect(Collectors.toList());
         }
 
-        public static void printSortedByAge(List<User> users, int count) {
+        private  List<User> getSortedByAge(List<User> users, int count) {
 
-            System.out.println(count + " smallest user is: ");
-            users.stream()
+            return users.stream()
                     .sorted(Comparator.comparingInt(User::getAge))
                     .limit(count)
-                    .forEach(System.out::println);
+                   .collect(Collectors.toList());
 
         }
     }
-
     public void start() {
         List<User> userList = new ArrayList<>();
         List<User> usersOlderForty = getUserOlderAge(userList, 40);
@@ -100,5 +91,3 @@ public class Executor {
 
     }
 }
-
-
